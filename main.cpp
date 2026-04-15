@@ -1,15 +1,14 @@
-// em chào cô ạ   
 #include <iostream>;
 using namespace std;
 // mô tả số hạng
 struct sohang {
 	float heso;
 	int somu;
-	sohang* next;
+	sohang *next;
 };
 // hàm tạo ra số hạng mới
 sohang* taosohang(float a, int b) {
-	sohang* sohangmoi = new sohang;
+	sohang *sohangmoi = new sohang;
 	sohangmoi->heso = a;
 	sohangmoi->somu = b;
 	sohangmoi->next = nullptr;
@@ -44,4 +43,77 @@ void themsohang(sohang*& head, float a, int b) {
 			hientai->next = sohangmoi;
 		}
 	}
+}
+void indathuc(sohang* ronaldo) {
+	if (ronaldo == nullptr) {
+		cout << "0";
+		return;
+	}
+	while (ronaldo != nullptr) {
+		cout << (ronaldo->heso > 0 ? "+" : " ") << ronaldo->heso << "x^" << ronaldo->somu << " ";
+		ronaldo = ronaldo->next;
+	}
+	cout << endl;
+
+}
+
+// cộng đa thức
+sohang* congdathuc(sohang* dt1, sohang* dt2) {
+	sohang* kq = nullptr;
+	while (dt1 != nullptr) {
+		themsohang(kq, dt1->heso, dt1->somu); // su dung hamf them so hang de them so hang vao kq
+		dt1 = dt1->next;
+	}
+	while (dt2 != nullptr) {
+		themsohang(kq, dt2->heso, dt2->somu);
+		dt2 = dt2->next;
+	}
+	return kq;
+}
+
+
+int main() {
+	sohang* dt1 = nullptr;
+	sohang* dt2 = nullptr;
+	int n1, n2;
+	float heso;
+	int somu;
+
+	//nhap da thuc 1
+	cout << "NHAP DA THUC THU NHAT" << endl;
+	cout << "Ban muon nhap bao nhieu so hang:";
+	cin >> n1;
+	for (int i = 0; i < n1; i++) {
+		cout << "Nhap he so va so mu cua so hang thu " << i + 1 << ": ";
+		cin >> heso >> somu;
+		themsohang(dt1, heso, somu);
+	}
+
+	//nhap da thuc 2
+	cout << endl;
+	cout << "NHAP DA THUC THU HAI" << endl;
+	cout << "Ban muon nhap bao nhieu so hang:";
+	cin >> n2;
+	for (int i = 0; i < n2; i++) {
+		cout << "Nhap he so va so mu cua so hang thu " << i + 1 << ": ";
+		cin >> heso >> somu;
+		themsohang(dt2, heso, somu);
+	}
+
+	//in da thuc
+	cout << endl;
+	cout << "DA THUC THU NHAT: ";
+	indathuc(dt1);
+	cout << endl;
+	cout << "DA THUC THU HAI: ";
+	indathuc(dt2);
+
+
+	//cong da thuc
+	sohang* dathuctong = congdathuc(dt1, dt2);
+	cout << endl;
+	cout << "DA THUC TONG: ";
+	indathuc(dathuctong);
+
+	return 0;
 }
